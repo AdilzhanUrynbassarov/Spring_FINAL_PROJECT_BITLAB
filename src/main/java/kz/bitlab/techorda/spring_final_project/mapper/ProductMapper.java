@@ -12,13 +12,11 @@ import java.util.List;
 
 public interface ProductMapper {
 
-    @Mapping(source = "name", target = "courseName")
     ProductDTO toDto(Product product);
 
-    @Mapping(source = "courseName", target = "name")
     Product toModel(ProductDTO productDTO);
 
     List<ProductDTO> toDtoList(List<Product> productList);
 
-    List<Product> toModelList(List<ProductDTO> courseList);
+    List<Product> toModelList(List<ProductDTO> productList);
 }

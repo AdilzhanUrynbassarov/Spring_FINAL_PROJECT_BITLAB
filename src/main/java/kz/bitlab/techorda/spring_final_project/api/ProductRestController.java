@@ -9,34 +9,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/course")
+@RequestMapping(value = "/product")
 @RequiredArgsConstructor
 public class ProductRestController {
 
     private final ProductService productService;
     @GetMapping
-    public List<ProductDTO> courseList() {
-        return productService.getCourses();
+    public List<ProductDTO> productList() {
+        return productService.getProducts();
     }
     @GetMapping(value = "{id}")
-    public ProductDTO getCourse(@PathVariable(name = "id") Long id) {
-        return productService. getCourse(id);
+    public ProductDTO getProduct(@PathVariable(name = "id") Long id) {
+        return productService. getProduct(id);
     }
-
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ProductDTO addCourse(@RequestBody ProductDTO course) {
-        return productService.addCourse(course);
+    public ProductDTO addProduct(@RequestBody ProductDTO product) {
+        return productService.addProduct(product);
     }
     @PutMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ProductDTO updateCourse(@RequestBody ProductDTO course) {
-       return productService.updateCourse(course);
+    public ProductDTO updateProduct(@RequestBody ProductDTO product) {
+       return productService.updateProduct(product);
     }
     @DeleteMapping(value = "{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public void deleteCourse(@PathVariable(name = "id") Long id) {
-        productService.deleteCourse(id);
+    public void deleteProduct(@PathVariable(name = "id") Long id) {
+        productService.deleteProduct(id);
     }
 }

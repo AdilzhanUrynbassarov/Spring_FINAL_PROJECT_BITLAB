@@ -9,8 +9,7 @@ import lombok.Setter;
 public class ProductDTO {
 
     private Long id;
-    private String courseName;
+    private CategoryDTO category;
     private String description;
-
     private int price;
 }

@@ -9,10 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Product extends BaseModel{
-
-
-    @Column(name = "name")
-    private String name;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Category category;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;

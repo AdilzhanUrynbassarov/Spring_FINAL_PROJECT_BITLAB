@@ -1,6 +1,8 @@
 package kz.bitlab.techorda.spring_final_project.api;
 
+import kz.bitlab.techorda.spring_final_project.dto.CategoryDTO;
 import kz.bitlab.techorda.spring_final_project.dto.ProductDTO;
+import kz.bitlab.techorda.spring_final_project.service.CategoryService;
 import kz.bitlab.techorda.spring_final_project.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -9,18 +11,22 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/course")
+@RequestMapping(value = "/api/product")
 public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping(value = "/get-course-list")
-    public List<ProductDTO> getCourses() {
-        return productService.getCourses();
+    private final CategoryService categoryService;
+
+
+    @GetMapping(value = "/get-product-list")
+    public List<ProductDTO> getProducts() {
+        return productService.getProducts();
     }
 
-    @PostMapping(value = "/add-course")
-    public ProductDTO addCourse(@RequestBody ProductDTO course) {
-        return productService.addCourse(course);
+    @PostMapping(value = "/add-product")
+    public ProductDTO addProduct(@RequestBody ProductDTO product) {
+        return productService.addProduct(product);
     }
+
 }

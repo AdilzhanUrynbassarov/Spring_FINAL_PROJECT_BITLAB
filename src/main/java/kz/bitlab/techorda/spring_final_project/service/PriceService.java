@@ -25,6 +25,14 @@ public class PriceService {
             return priceMapper.toDtoList(priceRepository.findAll());
     }
 
+    public PriceDTO getPrice(Long id) {
+        return  priceMapper.toDto(priceRepository.findById(id).orElse(new Price()));
+    }
+
+    public PriceDTO addPrice(PriceDTO price) {
+        return priceMapper.toDto(priceRepository.save(priceMapper.toModel(price)));
+    }
+
 
 
 }

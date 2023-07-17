@@ -1,5 +1,6 @@
 package kz.bitlab.techorda.spring_final_project.service;
 
+import kz.bitlab.techorda.spring_final_project.dto.CategoryDTO;
 import kz.bitlab.techorda.spring_final_project.dto.ProductDTO;
 import kz.bitlab.techorda.spring_final_project.mapper.ProductMapper;
 import kz.bitlab.techorda.spring_final_project.model.Product;
@@ -16,25 +17,26 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     private final ProductMapper productMapper;
-    public List<ProductDTO> getCourses() {
+    public List<ProductDTO> getProducts() {
         return productMapper.toDtoList(productRepository.findAll());
     }
 
-    public ProductDTO addCourse(ProductDTO course) {
-        return productMapper.toDto(productRepository.save(productMapper.toModel(course)));
+    public ProductDTO addProduct(ProductDTO product) {
+        return productMapper.toDto(productRepository.save(productMapper.toModel(product)));
     }
 
-    public ProductDTO getCourse(Long id) {
+    public ProductDTO getProduct(Long id) {
         return productMapper.toDto(productRepository.findById(id).orElse(new Product()));
     }
 
-    public ProductDTO updateCourse(ProductDTO course) {
-        return productMapper.toDto(productRepository.save(productMapper.toModel(course)));
+    public ProductDTO updateProduct(ProductDTO product) {
+        return productMapper.toDto(productRepository.save(productMapper.toModel(product)));
     }
 
-    public void deleteCourse(Long id) {
+    public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
 
 
 }

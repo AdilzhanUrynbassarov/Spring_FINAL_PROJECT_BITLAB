@@ -4,43 +4,24 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <div layout:fragment="content">
 
-        <input type="hidden" id="productId">
+        <input type="hidden" id="categoryId">
 
         <div class="row mb-3" sec:authorize="hasAnyRole('ROLE_ADMIN')">
             <div class="col-6 mx-auto">
                 <div class="row" >
                     <div class="col-12">
-                        <label>Продукт:</label>
+                        <label>Категория:</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <input type="text" class="form-control" id="productName">
+                        <input type="text" class="form-control" id="categoryName">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <label>Описание:</label>
-                    </div>
-                </div>
+
                 <div class="row mt-2">
                     <div class="col-12">
-                        <textarea class="form-control" id="description"></textarea>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <label>Цена за 1г/1л:</label>
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-12">
-                        <input type="number" class="form-control" id="price">
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-12">
-                        <button class="btn btn-success" onclick="addProduct()">Добавить продукт</button>
+                        <button class="btn btn-success" onclick="addCategory()">Добавить категорию</button>
                     </div>
                 </div>
             </div>
@@ -48,29 +29,23 @@
 
 
         <script type="text/javascript">
-            function addProduct() {
+            function addCategory() {
 
                 const httpRequest = new XMLHttpRequest();
-                httpRequest.open("POST", "/product", true);
+                httpRequest.open("POST", "/category", true);
                 httpRequest.setRequestHeader("Content-Type", "application/json");
 
-                let productName = document.getElementById("productName");
-                let description = document.getElementById("description");
-                let price = document.getElementById("price");
+                let categoryName = document.getElementById("categoryName");
 
                 httpRequest.onreadystatechange = function () {
                     if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
-                        productNameName.value = "";
-                        description.value = "";
-                        price.value = "";
-                        loadProduct();
+                        categoryName.value = "";
+                        loadCategory();
                     }
                 };
 
                 let body = {
-                    'productName': productName.value,
-                    'description' : description.value,
-                    'price' : price.value
+                    'category': categoryName.value
                 };
 
 
@@ -86,13 +61,11 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Товар</th>
-                            <th>Описание</th>
-                            <th>Цена за кг,л</th>
+                            <th>Категории</th>
                             <th style="width: 10%;">Детали</th>
                         </tr>
                     </thead>
-                    <tbody id="productListBody">
+                    <tbody id="categoryListBody">
 
                     </tbody>
 
@@ -102,42 +75,21 @@
                     <div class="modal-dialog">
                         <div class="modal-content" sec:authorize="!hasAnyRole('ROLE_ADMIN')">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">product Details</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Детали категории</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
 
                                 <div class="row">
                                     <div class="col-12">
-                                        <label>NAME:</label>
+                                        <label>Категория:</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <input type="text" class="form-control"  readonly id="productNameDetails">
+                                        <input type="text" class="form-control"  readonly id="categoryNameDetails">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <label>DESCRIPTION:</label>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
-                                        <textarea class="form-control" readonly id="descriptionDetails"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <label>PRICE:</label>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
-                                        <input type="number" readonly class="form-control" id="priceDetails">
-                                    </div>
-                                </div>
-
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
@@ -147,69 +99,44 @@
 
                         <div class="modal-content" sec:authorize="hasAnyRole('ROLE_ADMIN')">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">product Details</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Детали категории</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
 
                                 <div class="row">
                                     <div class="col-12">
-                                        <label>NAME:</label>
+                                        <label>Категория:</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <input type="text" class="form-control"  id="productNameDetails">
+                                        <select id="productNameDetails"></select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <label>DESCRIPTION:</label>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
-                                        <textarea class="form-control" id="descriptionDetails"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <label>PRICE:</label>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
-                                        <input type="number" class="form-control" id="priceDetails">
-                                    </div>
-                                </div>
-
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" onclick="deleteproduct()">DELETE</button>
                                 <button type="button" class="btn btn-primary" onclick="updateproduct()">SAVE</button>
                             </div>
                             <script type="text/javascript">
-                                function updateproduct() {
+                                function updateCategory() {
                                     const httpRequest = new XMLHttpRequest();
-                                    httpRequest.open("PUT", "/product", true);
+                                    httpRequest.open("PUT", "/category", true);
                                     httpRequest.setRequestHeader("Content-Type", "application/json");
 
-                                    let productId = document.getElementById("productId");
-                                    let productName = document.getElementById("productNameDetails");
-                                    let description = document.getElementById("descriptionDetails");
-                                    let price = document.getElementById("priceDetails");
+                                    let categoryId = document.getElementById("categoryId");
+                                    let categoryName = document.getElementById("categoryNameDetails");
 
                                     httpRequest.onreadystatechange = function () {
                                         if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
-                                            loadProduct();
+                                            loadCategory();
                                         }
                                     };
 
                                     let body = {
-                                        'id':productId.value,
-                                        'productName': productName.value,
-                                        'description' : description.value,
-                                        'price' : price.value
+                                        'id':categoryId.value,
+                                        'category': categoryName.value,
                                     };
 
 
@@ -217,16 +144,16 @@
                                     httpRequest.send(body);
 
                                 }
-                                function deleteproduct() {
+                                function deleteProduct() {
                                   let approve = confirm("Вы уверены?");
 
                                   if(approve) {
 
 
-                                      let productId = document.getElementById("productId");
+                                      let productId = document.getElementById("categoryId");
 
                                       const httpRequest = new XMLHttpRequest();
-                                      httpRequest.open("DELETE", "/product/"+productId.value, true);
+                                      httpRequest.open("DELETE", "/category/"+categoryId.value, true);
                                       httpRequest.setRequestHeader("Content-Type", "application/json");
 
 
@@ -234,7 +161,7 @@
                                       httpRequest.onreadystatechange = function () {
                                           if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
                                               detailsModal.hide();
-                                              loadProduct();
+                                              loadCategory();
                                           }
                                       };
 
@@ -254,50 +181,46 @@
         </div>
 
         <script type="text/javascript">
-            loadProduct();
-            function loadProduct() {
+            loadCategory();
+            function loadCategory() {
                 const httpRequest = new XMLHttpRequest();
 
-                httpRequest.open("GET", "/product", true);
+                httpRequest.open("GET", "/category", true);
                 httpRequest.onreadystatechange = function() {
                     if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
 
-                        let productList = JSON.parse(httpRequest.responseText);
+                        let categoryList = JSON.parse(httpRequest.responseText);
 
                         let tableContent = "";
 
                         for (let i = 0; i < productList.length; i++) {
                             console.log(productList[i].price);
                            tableContent+="<tr>";
-                           tableContent+="<td>"+productList[i].id+"</td>";
-                           tableContent+="<td>"+productList[i].name+"</td>";
-                           tableContent+="<td>"+productList[i].description+"</td>";
-                           tableContent+="<td>"+productList[i].price+" тг</td>";
-                           tableContent+="<td><button class='btn btn-primary btn-sm' onclick='openproductDetailModel("+productList[i].id+")'>DETAILS</button>";
+                           tableContent+="<td>"+categoryList[i].id+"</td>";
+                           tableContent+="<td>"+categoryList[i].category+"</td>";
+                           tableContent+="<td><button class='btn btn-primary btn-sm' onclick='openCategoryDetailModel("+categoryList[i].id+")'>DETAILS</button>";
                            tableContent+="</tr>";
                         }
-                        document.getElementById("productListBody").innerHTML=tableContent;
+                        document.getElementById("categoryListBody").innerHTML=tableContent;
 
                     }
                 }
                 httpRequest.send();
             }
 
-            function openproductDetailModel(id) {
+            function openCategoryDetailModel(id) {
 
                 detailsModal = new bootstrap.Modal(document.getElementById('detailModal'));
 
                 const httpRequest = new XMLHttpRequest();
 
-                httpRequest.open("GET", "/product/"+id, true);
+                httpRequest.open("GET", "/category/"+id, true);
                 httpRequest.onreadystatechange = function() {
                     if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
 
                         let result =JSON.parse(httpRequest.responseText);
-                        productId.value = result.id;
-                        productNameDetails.value = result.name;
-                        descriptionDetails.value = result.description;
-                        priceDetails.value = result.price;
+                        categoryId.value = result.id;
+                        categoryNameDetails.value = result.category;
 
                         detailsModal.show();
                     }

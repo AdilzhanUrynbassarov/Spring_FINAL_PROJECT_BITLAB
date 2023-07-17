@@ -3,60 +3,301 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div layout:fragment="content">
+
+  <input type="hidden" id="Id">
+
+  <div class="row mb-3" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+    <div class="col-6 mx-auto">
+      <div class="row" >
+        <div class="col-12">
+          <label>Рынок:</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <input type="text" class="form-control" id="priceName">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <label>Товар:</label>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <textarea class="form-control" id="description"></textarea>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <label>Цена за кг, л:</label>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <input type="number" class="form-control" id="price">
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12">
+          <label>Категории:</label>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <select id="categorySelect"></select>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-12">
+          <button class="btn btn-success" onclick="addPrice()">Добавить товар</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+loadSelect()
+   function loadSelect() {
+     // Retrieve category data from the server
+     const xhr = new XMLHttpRequest();
+
+     xhr.open("GET", "/api/product/get-categories", true);
+     xhr.responseType = 'json';
+
+
+     xhr.onload = function() {
+       if (xhr.status === 200) {
+         const data = xhr.response;
+
+         // Get the select element
+         const categorySelect = document.getElementById('categorySelect');
+
+         // Create option elements for each category
+         data.forEach(category => {
+           option = document.createElement('option');
+           option.value = category.category;
+           option.text = category.category;
+           categorySelect.appendChild(option);
+         });
+       } else {
+         console.error('Error retrieving category data:', xhr.status);
+       }
+     };
+     xhr.send();
+   }
+    function addPrice() {
+
+      const httpRequest = new XMLHttpRequest();
+      httpRequest.open("POST", "/market", true);
+      httpRequest.setRequestHeader("Content-Type", "application/json");
+
+      let priceName = document.getElementById("priceName");
+      // let description = document.getElementById("description");
+      let category = document.getElementById("categorySelect");
+      let price = document.getElementById("price");
+
+      httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
+          priceName.value = "";
+          category.value = "";
+          price.value = "";
+          loadprices();
+        }
+      };
+
+      let body = {
+        'market': {
+          'name': priceName.value,
+        },
+
+        'category' :{
+          'category': category.value,
+        },
+        'price' : price.value
+      };
+
+
+      body = JSON.stringify(body);
+      console.log(body);
+      httpRequest.send(body);
+
+    }
+  </script>
+
   <div class="row mt-3">
     <div class="col-12">
       <table class="table table-stripped">
         <thead>
         <tr>
           <th>ID</th>
-          <th>NAME</th>
-          <th>DESCRIPTION</th>
-          <th>PRICE</th>
-          <th style="width: 10%;">DETAILS</th>
+          <th>Рынок</th>
+          <th>Товар</th>
+          <th>Цена за кг, л</th>
+          <th style="width: 10%;">Детали</th>
         </tr>
         </thead>
-        <tbody id="courseListBody">
+        <tbody id="priceListBody">
 
         </tbody>
 
       </table>
 
+      <div class="modal fade" id="detailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content" sec:authorize="!hasAnyRole('ROLE_ADMIN')">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">price Details</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
+              <div class="row">
+                <div class="col-12">
+                  <label>Рынок:</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <input type="text" class="form-control"  readonly id="priceNameDetails">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <label>Товар:</label>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <textarea class="form-control" readonly id="descriptionDetails"></textarea>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-12">
+                  <label>Цена за кг, л:</label>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <input type="number" readonly class="form-control" id="priceDetails">
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
+              <button type="button" class="btn btn-primary">OK</button>
+            </div>
+          </div>
+
+          <div class="modal-content" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">price Details</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+              <div class="row">
+                <div class="col-12">
+                  <label>Рынок:</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <input type="text" class="form-control"  id="priceNameDetails">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <label>Товар:</label>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <textarea class="form-control" id="descriptionDetails"></textarea>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-12">
+                  <label>Цены за кг, л:</label>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <input type="number" class="form-control" id="priceDetails">
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" onclick="deleteprice()">DELETE</button>
+              <button type="button" class="btn btn-primary" onclick="updateprice()">SAVE</button>
+            </div>
+            </div>
 
       <script type="text/javascript">
-        loadCourses();
-        function loadCourses() {
+        loadprices();
+        function loadprices() {
           const httpRequest = new XMLHttpRequest();
 
           httpRequest.open("GET", "/market", true);
           httpRequest.onreadystatechange = function() {
             if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
 
-              let courseList = JSON.parse(httpRequest.responseText);
+              let priceList = JSON.parse(httpRequest.responseText);
 
               let tableContent = "";
 
-              for (let i = 0; i < courseList.length; i++) {
-                console.log(courseList[i].price);
+              for (let i = 0; i < priceList.length; i++) {
+                console.log(priceList[i].price);
                 tableContent+="<tr>";
-                tableContent+="<td>"+courseList[i].id+"</td>";
-                tableContent+="<td>"+courseList[i].market.name+"</td>";
-                tableContent+="<td>"+courseList[i].category.name+"</td>";
-                tableContent+="<td>"+courseList[i].price+"</td>";
-                tableContent+="<td><button class='btn btn-primary btn-sm' onclick='openCourseDetailModel("+courseList[i].id+")'>DETAILS</button>";
+                tableContent+="<td>"+priceList[i].id+"</td>";
+                tableContent+="<td>"+priceList[i].market.name+"</td>";
+                tableContent+="<td>"+priceList[i].category.category+"</td>";
+                tableContent+="<td>"+priceList[i].price+"</td>";
+                tableContent+="<td><button class='btn btn-primary btn-sm' onclick='openpriceDetailModel("+priceList[i].id+")'>DETAILS</button>";
                 tableContent+="</tr>";
               }
-              document.getElementById("courseListBody").innerHTML=tableContent;
+              document.getElementById("priceListBody").innerHTML=tableContent;
 
             }
           }
           httpRequest.send();
 
         }
+        function openpriceDetailModel(id) {
+
+          detailsModal = new bootstrap.Modal(document.getElementById('detailModal'));
+
+          const httpRequest = new XMLHttpRequest();
+
+          httpRequest.open("GET", "/market/"+id, true);
+          httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
+
+              let result =JSON.parse(httpRequest.responseText);
+              priceId.value = result.id;
+              priceNameDetails.value = result.market.name;
+              descriptionDetails.value = result.category.category;
+              priceDetails.value = result.price;
+
+              detailsModal.show();
+            }
+          }
+          httpRequest.send();
+
+
+        }
 
       </script>
 
   </div>
-
+      </div>
+    </div>
+  </div>
+</div>
 
 </html>

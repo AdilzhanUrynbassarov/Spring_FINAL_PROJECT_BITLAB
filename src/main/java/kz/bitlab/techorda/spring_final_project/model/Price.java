@@ -1,10 +1,7 @@
 package kz.bitlab.techorda.spring_final_project.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,10 +11,10 @@ import lombok.Setter;
 @Setter
 public class Price extends BaseModel {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Market market;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Category category;
 
     @Column(name = "price")

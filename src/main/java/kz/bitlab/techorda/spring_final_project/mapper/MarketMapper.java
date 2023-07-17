@@ -6,6 +6,6 @@ import kz.bitlab.techorda.spring_final_project.model.Market;
 public interface MarketMapper {
 
     MarketDTO toDto(Market market);
-    Market toDto(MarketDTO marketDTO);
+    Market toModel(MarketDTO marketDTO);
 
 }
