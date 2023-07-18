@@ -32,6 +32,7 @@ public class HomeController {
     public String marketPage() {
         return "marketPrice";
     }
+
     @GetMapping(value = "/sign-in-page")
     public String signinPage(){
         return "signin";

@@ -1,9 +1,13 @@
 package kz.bitlab.techorda.spring_final_project.api;
 
 import kz.bitlab.techorda.spring_final_project.dto.PriceDTO;
+import kz.bitlab.techorda.spring_final_project.model.Price;
 import kz.bitlab.techorda.spring_final_project.service.PriceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,4 +21,10 @@ public class PriceController {
     public PriceDTO addPrice(@RequestBody PriceDTO price) {
         return priceService.addPrice(price);
     }
+
+    public List<PriceDTO> getAllPrices() {
+        return priceService.getAllPrices();
+    }
+
+
 }

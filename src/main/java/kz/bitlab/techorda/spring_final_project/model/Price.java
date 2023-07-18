@@ -5,17 +5,19 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "t_pricelist")
 @Getter
 @Setter
 public class Price extends BaseModel {
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private Market market;
+    @Column(name = "name")
+    private String name;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private Category category;
+    @Column(name = "product")
+    private String product;
 
     @Column(name = "price")
     private int price;

@@ -32,6 +32,13 @@ public class PriceService {
     public PriceDTO addPrice(PriceDTO price) {
         return priceMapper.toDto(priceRepository.save(priceMapper.toModel(price)));
     }
+    public PriceDTO updatePrice(PriceDTO price) {
+        return priceMapper.toDto(priceRepository.save(priceMapper.toModel(price)));
+    }
+
+    public void deletePrice(Long id) {
+        priceRepository.deleteById(id);
+    }
 
 
 

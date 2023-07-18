@@ -30,7 +30,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-12">
-                        <label>Цена за 1г/1л:</label>
+                        <label>Цена за кг, л:</label>
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -60,7 +60,7 @@
 
                 httpRequest.onreadystatechange = function () {
                     if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
-                        productNameName.value = "";
+                        productName.value = "";
                         description.value = "";
                         price.value = "";
                         loadProduct();
@@ -68,7 +68,7 @@
                 };
 
                 let body = {
-                    'productName': productName.value,
+                    'product': productName.value,
                     'description' : description.value,
                     'price' : price.value
                 };
@@ -89,7 +89,6 @@
                             <th>Товар</th>
                             <th>Описание</th>
                             <th>Цена за кг,л</th>
-                            <th style="width: 10%;">Детали</th>
                         </tr>
                     </thead>
                     <tbody id="productListBody">
@@ -97,19 +96,18 @@
                     </tbody>
 
                 </table>
-
                 <div class="modal fade" id="detailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content" sec:authorize="!hasAnyRole('ROLE_ADMIN')">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">product Details</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Детали Продукта</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
 
                                 <div class="row">
                                     <div class="col-12">
-                                        <label>NAME:</label>
+                                        <label>Название:</label>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -119,7 +117,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <label>DESCRIPTION:</label>
+                                        <label>Описание:</label>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -129,7 +127,7 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-12">
-                                        <label>PRICE:</label>
+                                        <label>Цена за кг, л:</label>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -140,31 +138,30 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
-                                <button type="button" class="btn btn-primary">OK</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                <button type="button" class="btn btn-primary">Ок</button>
                             </div>
                         </div>
-
                         <div class="modal-content" sec:authorize="hasAnyRole('ROLE_ADMIN')">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">product Details</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Детали Продукта</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
 
                                 <div class="row">
                                     <div class="col-12">
-                                        <label>NAME:</label>
+                                        <label>Название:</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <input type="text" class="form-control"  id="productNameDetails">
+                                        <input type="text" id="productNameDetails" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <label>DESCRIPTION:</label>
+                                        <label>Описание:</label>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -174,7 +171,7 @@
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-12">
-                                        <label>PRICE:</label>
+                                        <label>Цены за кг, л:</label>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -185,20 +182,21 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" onclick="deleteproduct()">DELETE</button>
-                                <button type="button" class="btn btn-primary" onclick="updateproduct()">SAVE</button>
+                                <button type="button" class="btn btn-danger" onclick="deleteProduct()">DELETE</button>
+                                <button type="button" class="btn btn-primary" onclick="updateProduct()">SAVE</button>
                             </div>
+
+
                             <script type="text/javascript">
-                                function updateproduct() {
+                                function updateProduct() {
                                     const httpRequest = new XMLHttpRequest();
                                     httpRequest.open("PUT", "/product", true);
                                     httpRequest.setRequestHeader("Content-Type", "application/json");
 
                                     let productId = document.getElementById("productId");
-                                    let productName = document.getElementById("productNameDetails");
+                                    let productNameDetails = document.getElementById("productNameDetails");
                                     let description = document.getElementById("descriptionDetails");
                                     let price = document.getElementById("priceDetails");
-
                                     httpRequest.onreadystatechange = function () {
                                         if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
                                             loadProduct();
@@ -207,7 +205,7 @@
 
                                     let body = {
                                         'id':productId.value,
-                                        'productName': productName.value,
+                                        'product': productNameDetails.value,
                                         'description' : description.value,
                                         'price' : price.value
                                     };
@@ -217,29 +215,29 @@
                                     httpRequest.send(body);
 
                                 }
-                                function deleteproduct() {
-                                  let approve = confirm("Вы уверены?");
+                                function deleteProduct() {
+                                    let approve = confirm("Вы уверены?");
 
-                                  if(approve) {
-
-
-                                      let productId = document.getElementById("productId");
-
-                                      const httpRequest = new XMLHttpRequest();
-                                      httpRequest.open("DELETE", "/product/"+productId.value, true);
-                                      httpRequest.setRequestHeader("Content-Type", "application/json");
+                                    if(approve) {
 
 
+                                        let productId = document.getElementById("productId");
 
-                                      httpRequest.onreadystatechange = function () {
-                                          if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
-                                              detailsModal.hide();
-                                              loadProduct();
-                                          }
-                                      };
+                                        const httpRequest = new XMLHttpRequest();
+                                        httpRequest.open("DELETE", "/product/"+productId.value, true);
+                                        httpRequest.setRequestHeader("Content-Type", "application/json");
 
-                                      httpRequest.send();
-                                  }
+
+
+                                        httpRequest.onreadystatechange = function () {
+                                            if (httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200) {
+                                                detailsModal.hide();
+                                                loadProduct();
+                                            }
+                                        };
+
+                                        httpRequest.send();
+                                    }
 
 
 
@@ -249,7 +247,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -270,10 +267,10 @@
                             console.log(productList[i].price);
                            tableContent+="<tr>";
                            tableContent+="<td>"+productList[i].id+"</td>";
-                           tableContent+="<td>"+productList[i].name+"</td>";
+                           tableContent+="<td>"+productList[i].product+"</td>";
                            tableContent+="<td>"+productList[i].description+"</td>";
                            tableContent+="<td>"+productList[i].price+" тг</td>";
-                           tableContent+="<td><button class='btn btn-primary btn-sm' onclick='openproductDetailModel("+productList[i].id+")'>DETAILS</button>";
+                           tableContent+="<td><button class='btn btn-primary btn-sm' onclick='openProductDetailModel("+productList[i].id+")'>DETAILS</button>";
                            tableContent+="</tr>";
                         }
                         document.getElementById("productListBody").innerHTML=tableContent;
@@ -283,7 +280,7 @@
                 httpRequest.send();
             }
 
-            function openproductDetailModel(id) {
+            function openProductDetailModel(id) {
 
                 detailsModal = new bootstrap.Modal(document.getElementById('detailModal'));
 
@@ -295,7 +292,7 @@
 
                         let result =JSON.parse(httpRequest.responseText);
                         productId.value = result.id;
-                        productNameDetails.value = result.name;
+                        productNameDetails.value = result.product;
                         descriptionDetails.value = result.description;
                         priceDetails.value = result.price;
 
@@ -308,6 +305,6 @@
             }
 
         </script>
+            </div>
 
-    </div>
 </html>

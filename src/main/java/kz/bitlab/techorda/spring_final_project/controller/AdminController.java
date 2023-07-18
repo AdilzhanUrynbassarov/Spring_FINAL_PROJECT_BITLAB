@@ -12,4 +12,5 @@ public class AdminController {
         public String adminPanel(Model model) {
             return "admin";
     }
+
 }

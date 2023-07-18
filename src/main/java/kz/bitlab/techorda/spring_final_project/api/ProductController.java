@@ -1,8 +1,6 @@
 package kz.bitlab.techorda.spring_final_project.api;
 
-import kz.bitlab.techorda.spring_final_project.dto.CategoryDTO;
 import kz.bitlab.techorda.spring_final_project.dto.ProductDTO;
-import kz.bitlab.techorda.spring_final_project.service.CategoryService;
 import kz.bitlab.techorda.spring_final_project.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +13,6 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
-    private final CategoryService categoryService;
-
 
     @GetMapping(value = "/get-product-list")
     public List<ProductDTO> getProducts() {

@@ -31,4 +31,16 @@ public class PriceRestController {
     public PriceDTO addPrice(@RequestBody PriceDTO price) {
         return priceService.addPrice(price);
     }
+
+
+    @PutMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public PriceDTO updatePrice(@RequestBody PriceDTO price) {
+        return priceService.updatePrice(price);
+    }
+    @DeleteMapping(value = "{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public void deletePrice(@PathVariable(name = "id") Long id) {
+        priceService.deletePrice(id);
+    }
 }

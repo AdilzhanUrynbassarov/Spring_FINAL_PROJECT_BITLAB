@@ -1,6 +1,5 @@
 package kz.bitlab.techorda.spring_final_project.service;
 
-import kz.bitlab.techorda.spring_final_project.dto.CategoryDTO;
 import kz.bitlab.techorda.spring_final_project.dto.ProductDTO;
 import kz.bitlab.techorda.spring_final_project.mapper.ProductMapper;
 import kz.bitlab.techorda.spring_final_project.model.Product;
