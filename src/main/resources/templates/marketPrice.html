@@ -194,7 +194,7 @@
       <script type="text/javascript">
         function updatePrice() {
           const httpRequest = new XMLHttpRequest();
-          httpRequest.open("PUT", "/price", true);
+          httpRequest.open("PUT", "/market", true);
           httpRequest.setRequestHeader("Content-Type", "application/json");
 
           let priceId = document.getElementById("priceId");
@@ -228,7 +228,7 @@
             let priceId = document.getElementById("priceId");
 
             const httpRequest = new XMLHttpRequest();
-            httpRequest.open("DELETE", "/market-names/"+priceId.value, true);
+            httpRequest.open("DELETE", "/market/"+priceId.value, true);
             httpRequest.setRequestHeader("Content-Type", "application/json");
 
 
