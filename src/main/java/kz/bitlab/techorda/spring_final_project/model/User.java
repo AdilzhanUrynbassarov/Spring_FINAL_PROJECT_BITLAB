@@ -18,11 +18,12 @@ public class User extends BaseModel implements UserDetails {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "full_name")
+    public String fullName;
     @Column(name = "password")
     private String password;
 
-    @Column(name = "full_name")
-    public String fullName;
+
 
     @ManyToMany(fetch = FetchType.EAGER) // Eager многновенно подтягивает список
     private List<Permission> permissions;
