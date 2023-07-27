@@ -34,15 +34,15 @@ public class SecurityConfig {
         builder.userDetailsService(userService() ).passwordEncoder(passwordEncoder());
 
         http.formLogin()
-                .loginPage("/sign-in-page") // "/sign-in-page" Controller page
-                .loginProcessingUrl("/to-enter") // form action ="/to-enter" method = "post"
-                .usernameParameter("user_email") // <input type = "email" name = "user_meal">
-                .passwordParameter("user_password") // <input type "password" name = "user_password">
-                .defaultSuccessUrl("/profile") // response.sendRedirect("/profile")
+                .loginPage("/sign-in-page")
+                .loginProcessingUrl("/to-enter")
+                .usernameParameter("user_email")
+                .passwordParameter("user_password")
+                .defaultSuccessUrl("/profile")
                 .failureUrl("/sign-in-page?autherror");
 
         http.logout()
-                .logoutUrl("/sign-out") //post request to /sign-out
+                .logoutUrl("/sign-out")
                 .logoutSuccessUrl("/");
 
         http.csrf().disable();

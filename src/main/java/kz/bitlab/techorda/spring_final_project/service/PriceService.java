@@ -1,12 +1,10 @@
 package kz.bitlab.techorda.spring_final_project.service;
 
 import kz.bitlab.techorda.spring_final_project.dto.PriceDTO;
-import kz.bitlab.techorda.spring_final_project.dto.ProductDTO;
 import kz.bitlab.techorda.spring_final_project.mapper.PriceMapper;
 import kz.bitlab.techorda.spring_final_project.model.Price;
 import kz.bitlab.techorda.spring_final_project.repository.PriceRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

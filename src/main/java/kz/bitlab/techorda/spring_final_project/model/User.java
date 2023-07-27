@@ -25,7 +25,7 @@ public class User extends BaseModel implements UserDetails {
 
 
 
-    @ManyToMany(fetch = FetchType.EAGER) // Eager многновенно подтягивает список
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Permission> permissions;
 
 
